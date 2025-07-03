@@ -111,6 +111,8 @@ export default function Home() {
     // Add more products as needed
   ];
 
+  const newlyAdded = products.slice(0, 3); // or select based on timestamp if available
+
   // Group products by category
   const groupedProducts = products.reduce((groups, product) => {
     const category = product.category;
@@ -123,12 +125,23 @@ export default function Home() {
 
   return (
     <div className="home-page">
+      {/* Newly Added Section */}
+      <div className="category-section">
+        <h2 className="category-title">Newly Added</h2>
+        <div className="product-grid">
+          {newlyAdded.map(product => (
+            <ProductCard key={`${product.id}-${product.name}`} product={product} />
+          ))}
+        </div>
+      </div>
+
+      {/* Other Categories */}
       {Object.entries(groupedProducts).map(([category, products]) => (
         <div key={category} className="category-section">
           <h2 className="category-title">{category}</h2>
           <div className="product-grid">
             {products.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={`${product.id}-${product.name}`} product={product} />
             ))}
           </div>
         </div>
